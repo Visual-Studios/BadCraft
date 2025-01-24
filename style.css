@@ -15,8 +15,9 @@ body {
     background-color: #fff;
     border: 2px solid #000;
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
+    grid-template-columns: repeat(50, 1fr); /* Increase grid size */
+    grid-template-rows: repeat(50, 1fr); /* Increase grid size */
+    overflow: auto; /* Make container scrollable */
 }
 .block {
     border: 1px solid #000;
