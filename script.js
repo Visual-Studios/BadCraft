@@ -1,6 +1,8 @@
 let scene, camera, renderer;
 let raycaster, mouse;
 let blocks = [];
+let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
+const velocity = new THREE.Vector3();
 
 init();
 animate();
@@ -37,6 +39,8 @@ function init() {
     // Add event listeners
     window.addEventListener('resize', onWindowResize, false);
     window.addEventListener('click', onMouseClick, false);
+    window.addEventListener('keydown', onKeyDown, false);
+    window.addEventListener('keyup', onKeyUp, false);
 }
 
 function onWindowResize() {
@@ -64,7 +68,50 @@ function onMouseClick(event) {
     }
 }
 
+function onKeyDown(event) {
+    switch (event.code) {
+        case 'KeyW':
+            moveForward = true;
+            break;
+        case 'KeyS':
+            moveBackward = true;
+            break;
+        case 'KeyA':
+            moveLeft = true;
+            break;
+        case 'KeyD':
+            moveRight = true;
+            break;
+    }
+}
+
+function onKeyUp(event) {
+    switch (event.code) {
+        case 'KeyW':
+            moveForward = false;
+            break;
+        case 'KeyS':
+            moveBackward = false;
+            break;
+        case 'KeyA':
+            moveLeft = false;
+            break;
+        case 'KeyD':
+            moveRight = false;
+            break;
+    }
+}
+
 function animate() {
     requestAnimationFrame(animate);
+
+    if (moveForward) velocity.z -= 0.1;
+    if (moveBackward) velocity.z += 0.1;
+    if (moveLeft) velocity.x -= 0.1;
+    if (moveRight) velocity.x += 0.1;
+
+    camera.position.add(velocity);
+    velocity.multiplyScalar(0.9); // Damping
+
     renderer.render(scene, camera);
 }
