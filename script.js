@@ -6,6 +6,8 @@ init();
 animate();
 
 function init() {
+    console.log("Initializing scene...");
+
     // Set up the scene
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x87ceeb);
@@ -29,6 +31,8 @@ function init() {
     const ground = new THREE.Mesh(groundGeometry, groundMaterial);
     ground.rotation.x = -Math.PI / 2;
     scene.add(ground);
+
+    console.log("Scene initialized.");
 
     // Add event listeners
     window.addEventListener('resize', onWindowResize, false);
