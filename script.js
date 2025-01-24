@@ -3,6 +3,7 @@ let raycaster, mouse;
 let blocks = [];
 let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
 const velocity = new THREE.Vector3();
+const direction = new THREE.Vector3();
 
 init();
 animate();
@@ -105,10 +106,12 @@ function onKeyUp(event) {
 function animate() {
     requestAnimationFrame(animate);
 
-    if (moveForward) velocity.z -= 0.1;
-    if (moveBackward) velocity.z += 0.1;
-    if (moveLeft) velocity.x -= 0.1;
-    if (moveRight) velocity.x += 0.1;
+    direction.z = Number(moveForward) - Number(moveBackward);
+    direction.x = Number(moveRight) - Number(moveLeft);
+    direction.normalize(); // this ensures consistent movements in all directions
+
+    if (moveForward || moveBackward) velocity.z -= direction.z * 0.1;
+    if (moveLeft || moveRight) velocity.x -= direction.x * 0.1;
 
     camera.position.add(velocity);
     velocity.multiplyScalar(0.9); // Damping
