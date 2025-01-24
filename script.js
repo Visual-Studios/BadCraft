@@ -4,6 +4,7 @@ let blocks = [];
 let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
 const velocity = new THREE.Vector3();
 const direction = new THREE.Vector3();
+const speed = 0.05; // Adjust this value to make the camera move slower
 
 init();
 animate();
@@ -110,8 +111,8 @@ function animate() {
     direction.x = Number(moveRight) - Number(moveLeft);
     direction.normalize(); // this ensures consistent movements in all directions
 
-    if (moveForward || moveBackward) velocity.z -= direction.z * 0.1;
-    if (moveLeft || moveRight) velocity.x -= direction.x * 0.1;
+    if (moveForward || moveBackward) velocity.z -= direction.z * speed;
+    if (moveLeft || moveRight) velocity.x -= direction.x * speed;
 
     camera.position.add(velocity);
     velocity.multiplyScalar(0.9); // Damping
